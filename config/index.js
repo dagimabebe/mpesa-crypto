@@ -23,3 +23,18 @@ module.exports = {
     defaultAsset: process.env.DEFAULT_CRYPTO_ASSET || 'ETH'
   }
 };
+
+
+module.exports = {
+
+  blockchain: {
+    nodeUrl: process.env.BLOCKCHAIN_NODE_URL || 'https://mainnet.infura.io/v3/YOUR_INFURA_KEY',
+    chainId: process.env.BLOCKCHAIN_CHAIN_ID || 1 // Mainnet
+  },
+  mpesa: {
+
+    initiatorName: process.env.MPESA_INITIATOR_NAME,
+    initiatorPassword: process.env.MPESA_INITIATOR_PASSWORD,
+    certPath: process.env.MPESA_CERT_PATH
+  }
+};
