@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    image: mpesa-crypto-backend
+    container_name: mpesa-crypto-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/mpesa-crypto
+      - MPESA_BASE_URL=${MPESA_BASE_URL}
+      - MPESA_CONSUMER_KEY=${MPESA_CONSUMER_KEY}
+      - MPESA_CONSUMER_SECRET=${MPESA_CONSUMER_SECRET}
+      - MPESA_BUSINESS_SHORTCODE=${MPESA_BUSINESS_SHORTCODE}
+      - MPESA_PASSKEY=${MPESA_PASSKEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - SYSTEM_SALT=${SYSTEM_SALT}
+      - BLOCKCHAIN_NODE_URL=${BLOCKCHAIN_NODE_URL}
+      - CONTRACT_ADDRESS=${CONTRACT_ADDRESS}
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:5.0
+    container_name: mpesa-crypto-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    networks:
+      - app-network
+
+  # Ethereum node like gech
+  geth:
+    image: ethereum/client-go:stable
+    container_name: mpesa-crypto-geth
+    command: >
+      --syncmode light
+      --http
+      --http.addr 0.0.0.0
+      --http.api eth,net,web3
+      --http.vhosts=*
+      --http.corsdomain=*
+    ports:
+      - "8545:8545"
+      - "30303:30303"
+    volumes:
+      - geth-data:/root/.ethereum
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  geth-data:
