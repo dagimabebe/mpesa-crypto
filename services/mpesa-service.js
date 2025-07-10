@@ -1,4 +1,59 @@
 
+async initiateB2CPayment(phone, amount, reference) {
+  await this.getAccessToken();
+  
+  const payload = {
+    InitiatorName: config.mpesa.initiatorName,
+    SecurityCredential: this._getSecurityCredential(),
+    CommandID: 'BusinessPayment',
+    Amount: amount,
+    PartyA: config.mpesa.businessShortCode,
+    PartyB: phone,
+    Remarks: `Crypto withdrawal: ${reference}`,
+    QueueTimeOutURL: `${config.server.baseUrl}/api/mpesa/b2c-timeout`,
+    ResultURL: `${config.server.baseUrl}/api/mpesa/b2c-result`,
+    Occasion: 'Withdrawal'
+  };
+
+  try {
+    const response = await axios.post(
+      `${config.mpesa.baseUrl}/mpesa/b2c/v1/paymentrequest`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    
+    return {
+      success: true,
+      transactionId: response.data.ConversationID,
+      response: response.data
+    };
+  } catch (error) {
+    console.error('B2C error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data || 'B2C payment failed'
+    };
+  }
+}
+
+_getSecurityCredential() {
+
+  const initiatorPassword = config.mpesa.initiatorPassword;
+  const publicKey = fs.readFileSync(config.mpesa.certPath, 'utf8');
+  
+  return crypto.publicEncrypt(
+    {
+      key: publicKey,
+      padding: crypto.constants.RSA_PKCS1_PADDING
+    },
+    Buffer.from(initiatorPassword)
+  ).toString('base64');
+}
 const axios = require('axios');
 const crypto = require('crypto');
 const config = require('../config');
