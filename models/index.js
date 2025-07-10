@@ -1,4 +1,9 @@
 
+module.exports = {
+  User: require('./User'),
+  Wallet: require('./Wallet'),
+  Transaction: require('./Transaction') 
+};
 const mongoose = require('mongoose');
 require('dotenv').config();
 
