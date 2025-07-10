@@ -90,3 +90,6 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
+const transactionRoutes = require('./routes/transaction-routes');
+app.use('/api/transactions', transactionRoutes);
