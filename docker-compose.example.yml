@@ -1,0 +1,16 @@
+# for docker users only............
+version: '3.8'
+
+services:
+  backend:
+    image: your-docker-image
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/mpesa-crypto
+      - MPESA_CONSUMER_KEY=${MPESA_CONSUMER_KEY}
+      # Add other variables here
+  
+  mongo:
+    image: mongo:5.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
