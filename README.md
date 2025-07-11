@@ -6,7 +6,7 @@
 ![Solidity](https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-A secure and scalable system for bridging Safaricom's M-Pesa mobile money with cryptocurrency assets. Developed by [Dagima Bebe](https://github.com/dagimabebe).
+A secure and scalable system for bridging Safaricom's M-Pesa mobile money with cryptocurrency assets. Developed by [Dagim abebe](https://github.com/dagimabebe).
 
 [![GitHub stars](https://img.shields.io/github/stars/dagimabebe/mpesa-crypto?style=social)](https://github.com/dagimabebe/mpesa-crypto)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -230,5 +230,5 @@ This project is for educational purposes only. Use at your own risk. The develop
 - GDPR and data protection laws
 
 ---
-Developed by [Dagim aBebe](https://dagi-builds.netlify.app)  
+Developed by [Dagim abebe](https://dagi-builds.netlify.app)  
 For support or questions, please open an issue on GitHub.
